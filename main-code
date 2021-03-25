@@ -3,6 +3,7 @@ import lxml.html
 html = requests.get('https://store.steampowered.com/explore/new/')
 doc = lxml.html.fromstring(html.content)
 new_releases = doc.xpath('//div[@id="tab_newreleases_content"]')[0]
+
 titles = new_releases.xpath('.//div[@class="tab_item_name"]/text()')
 prices = new_releases.xpath('.//div[@class="discount_final_price"]/text()')
 tags_divs = new_releases.xpath('.//div[@class="tab_item_top_tags"]')
@@ -25,8 +26,9 @@ for d in new_releases:
         discounts.append('0%')
     else:
         discounts.append(d.xpath('.//div[@class="discount_pct"]/text()')[0])
-
-#discounts = [int(r.replace('%','')) for r in discounts]
+        
+#I'm sure I can shorten this with list comprehension, but the following just returns a list of None.
+#discounts = [discounts.append('0%') if bool(d.xpath('.//div[@class="discount_pct"]/text()')) == False else discounts.append(d.xpath('.//div[@class="discount_pct"]/text()')[0]) for d in new_releases]
 
 output = []
 for info in zip(titles, prices, discounts, tags, total_platforms):
