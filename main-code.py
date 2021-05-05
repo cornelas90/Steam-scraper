@@ -20,15 +20,15 @@ for game in platforms_div:
         platforms.remove('hmd_separator')
     total_platforms.append(platforms)
 
-discounts = []
+'''discounts = []
 for d in new_releases:
     if bool(d.xpath('.//div[@class="discount_pct"]/text()')) == False:
         discounts.append('0%')
     else:
-        discounts.append(d.xpath('.//div[@class="discount_pct"]/text()')[0])
-        
-#I'm sure I can shorten this with list comprehension, but the following just returns a list of None.
-#discounts = [discounts.append('0%') if bool(d.xpath('.//div[@class="discount_pct"]/text()')) == False else discounts.append(d.xpath('.//div[@class="discount_pct"]/text()')[0]) for d in new_releases]
+        discounts.append(d.xpath('.//div[@class="discount_pct"]/text()')[0])'''
+     
+#Hey I got it!
+discounts = ['0%' if bool(d.xpath('.//div[@class="discount_pct"]/text()')) is False else d.xpath('.//div[@class="discount_pct"]/text()')[0] for d in new_releases]
 
 output = []
 for info in zip(titles, prices, discounts, tags, total_platforms):
@@ -39,3 +39,5 @@ for info in zip(titles, prices, discounts, tags, total_platforms):
     resp['tags'] = info[3]
     resp['platforms'] = info[4]
     output.append(resp)
+    
+print(output)
