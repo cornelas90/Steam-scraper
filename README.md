@@ -1,2 +1,2 @@
 # Steam-scraper
-This is my attempt to understanding scraping
+Scraping the "new release" page of steam
